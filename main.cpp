@@ -32,11 +32,31 @@ std::string arithmetic1() {
 #undef T
       ; //
 }
-int main() {
+
+void header() {
+  std::cout //
+      << "|left＼right|"
+#define T(_, n) << #n << "|" //
+#include "types.hpp"
+#undef T
+      << "\n"
+
+      << "|:--|"
+#define T(_, n) << ":--:|" //
+#include "types.hpp"
+#undef T
+      << "\n";
+}
+void arithmetic() {
+  header();
   std::cout                                 //
 #define T(x, _) << arithmetic1<x>() << "\n" //
 #include "types.hpp"
 #undef T
       ;
+}
+
+int main() {
+  arithmetic();
   return 0;
 }
