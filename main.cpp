@@ -47,16 +47,83 @@ void header() {
 #undef T
       << "\n";
 }
+
 void arithmetic() {
+  std::cout << "## ( left + right )\n";
   header();
   std::cout                                 //
 #define T(x, _) << arithmetic1<x>() << "\n" //
 #include "types.hpp"
 #undef T
-      ;
+      << endl;
+}
+
+template <typename lt, typename rt> //
+std::string shift2() {
+  return name(lt() << rt()) + "|";
+}
+
+template <typename lt> //
+std::string shift1() {
+  return "|" + name(lt()) + "|"
+#define T(x, _) +shift2<x, lt>()
+#include "itypes.hpp"
+#undef T
+      ; //
+}
+
+void iheader() {
+  std::cout //
+      << "|left＼right|"
+#define T(_, n) << #n << "|" //
+#include "itypes.hpp"
+#undef T
+      << "\n"
+
+      << "|:--|"
+#define T(_, n) << ":--:|" //
+#include "itypes.hpp"
+#undef T
+      << "\n";
+}
+
+void shift() {
+  std::cout << "## ( left << right )\n";
+  iheader();
+  std::cout                            //
+#define T(x, _) << shift1<x>() << "\n" //
+#include "itypes.hpp"
+#undef T
+      << endl;
+}
+
+template <typename lt, typename rt> //
+std::string cond2() {
+  return name(true ? lt() : rt()) + "|";
+}
+
+template <typename lt> //
+std::string cond1() {
+  return "|" + name(lt()) + "|"
+#define T(x, _) +cond2<x, lt>()
+#include "types.hpp"
+#undef T
+      ; //
+}
+
+void cond() {
+  std::cout << "## ( cond ? left : right )\n";
+  header();
+  std::cout                           //
+#define T(x, _) << cond1<x>() << "\n" //
+#include "types.hpp"
+#undef T
+      << endl;
 }
 
 int main() {
   arithmetic();
+  shift();
+  cond();
   return 0;
 }
